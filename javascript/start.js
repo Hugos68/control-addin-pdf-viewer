@@ -21,6 +21,9 @@ if (factbox && factbox.contains(window.frameElement)) {
   factbox.querySelector(".ms-nav-layout-factbox-content-area").style.height =
     "100%";
   factbox.querySelector(
+    ".ms-nav-layout-factbox-content-area"
+  ).style.paddingInline = "0px";
+  factbox.querySelector(
     ".ms-nav-layout-factbox-details-pane"
   ).style.height = `calc(100% - ${
     factbox.querySelector(".ms-nav-band-header").offsetHeight
