@@ -12,7 +12,9 @@ window.frameElement.style.flexBasis = "auto";
 window.frameElement.style.paddingBottom = "42px";
 
 // Grab factbox (if it exists)
-const factbox = window.frameElement.closest(".ms-nav-cardfactbox");
+const factbox = window.frameElement.closest(
+  ".ms-nav-layout-factbox-pane-container"
+);
 
 // Patch factbox height if it's present and the control add-in is inside the factbox
 if (factbox && factbox.contains(window.frameElement)) {
