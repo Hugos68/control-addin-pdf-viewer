@@ -11,28 +11,21 @@ window.frameElement.style.flexShrink = "1";
 window.frameElement.style.flexBasis = "auto";
 window.frameElement.style.paddingBottom = "42px";
 
-const factboxSelector = ".ms-nav-layout-factbox-pane-container";
-const insideFactbox = window.frameElement.closest(factboxSelector) !== null;
+// Grab factbox (if it exists)
+const factbox = window.frameElement.closest(".ms-nav-cardfactbox");
 
-if (insideFactbox) {
-  const contentArea = window.frameElement.closest(
-    ".ms-nav-layout-factbox-content-area"
-  );
-  contentArea.style.height = "100%";
-
-  const detailsPane = window.frameElement.closest(
+// Patch factbox height if it's present and the control add-in is inside the factbox
+if (factbox && factbox.contains(window.frameElement)) {
+  factbox.querySelector(".ms-nav-layout-factbox-content-area").style.height =
+    "100%";
+  factbox.querySelector(
     ".ms-nav-layout-factbox-details-pane"
-  );
-
-  const header = window.frameElement
-    .closest(factboxSelector)
-    .querySelector(".ms-nav-band-header");
-
-  detailsPane.style.height = `calc(100% - ${header.offsetHeight}px)`;
-
-  window.frameElement.closest(".ms-nav-cardfactbox").style.height = "100%";
-  window.frameElement.closest(".ms-nav-band-container").style.height = "100%";
-  window.frameElement.closest(".ms-nav-cardpartform").style.height = "100%";
+  ).style.height = `calc(100% - ${
+    factbox.querySelector(".ms-nav-band-header").offsetHeight
+  }px)`;
+  factbox.querySelector(".ms-nav-cardfactbox").style.height = "100%";
+  factbox.querySelector(".ms-nav-band-container").style.height = "100%";
+  factbox.querySelector(".ms-nav-cardpartform").style.height = "100%";
 }
 
 // Grab root
