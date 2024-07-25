@@ -1,4 +1,4 @@
-// Patch controlAddIn height
+// Patch control add-in height
 window.frameElement.parentElement.style.display = "flex";
 window.frameElement.parentElement.style.flexDirection = "column";
 window.frameElement.parentElement.style.flexGrow = "1";
@@ -15,13 +15,10 @@ window.frameElement.style.paddingBottom = "42px";
 const factbox = window.frameElement.closest(
   ".ms-nav-layout-factbox-pane-container"
 );
+const insideFactbox = factbox && factbox.contains(window.frameElement);
 
-// Patch factbox height if it's present and the control add-in is inside the factbox
-if (factbox && factbox.contains(window.frameElement)) {
-  window.frameElement.closest(
-    ".ms-nav-layout-aside-right.ms-nav-layout-expanded"
-  ).style.flexBasis = "33%";
-
+// Patch factbox height if we're inside the factbox
+if (insideFactbox) {
   factbox.querySelector(".ms-nav-layout-factbox-content-area").style.height =
     "100%";
   factbox.querySelector(
@@ -60,9 +57,23 @@ function loadDocument(data) {
   object.data = data;
 }
 
+/**
+ * The the factbox panel width
+ *
+ * @param {number} percentage
+ */
+function setFactBoxPanelWidthPercentage(percentage) {
+  if (insideFactbox) {
+    window.frameElement.closest(
+      ".ms-nav-layout-aside-right"
+    ).style.flexBasis = `${percentage}%`;
+  }
+}
+
 // Expose methods to the control add-in
 Object.assign(globalThis, {
   LoadDocument: loadDocument,
+  SetFactBoxPanelWidthPercentage: setFactBoxPanelWidthPercentage,
 });
 
 // Notify that the control add-in is ready
