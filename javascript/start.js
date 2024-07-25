@@ -18,6 +18,10 @@ const factbox = window.frameElement.closest(
 
 // Patch factbox height if it's present and the control add-in is inside the factbox
 if (factbox && factbox.contains(window.frameElement)) {
+  window.frameElement.closest(
+    ".ms-nav-layout-aside-right.ms-nav-layout-expanded"
+  ).style.flexBasis = "50%";
+
   factbox.querySelector(".ms-nav-layout-factbox-content-area").style.height =
     "100%";
   factbox.querySelector(
