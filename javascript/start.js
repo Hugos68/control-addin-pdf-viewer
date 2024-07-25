@@ -20,7 +20,7 @@ const factbox = window.frameElement.closest(
 if (factbox && factbox.contains(window.frameElement)) {
   window.frameElement.closest(
     ".ms-nav-layout-aside-right.ms-nav-layout-expanded"
-  ).style.flexBasis = "50%";
+  ).style.flexBasis = "33%";
 
   factbox.querySelector(".ms-nav-layout-factbox-content-area").style.height =
     "100%";
