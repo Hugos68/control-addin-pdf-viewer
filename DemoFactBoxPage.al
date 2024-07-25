@@ -23,7 +23,6 @@ page 50101 "Hugos Customers"
         }
         area(FactBoxes)
         {
-
             part(ADSDIPDFDocument; "Demo FactBox Page")
             {
                 ApplicationArea = All;
