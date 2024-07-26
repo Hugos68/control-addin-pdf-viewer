@@ -1,3 +1,6 @@
+// Get the root document
+const rootDocument = window.parent.document;
+
 // Patch control add-in height
 window.frameElement.parentElement.style.display = "flex";
 window.frameElement.parentElement.style.flexDirection = "column";
@@ -11,33 +14,44 @@ window.frameElement.style.flexShrink = "1";
 window.frameElement.style.flexBasis = "auto";
 window.frameElement.style.paddingBottom = "42px";
 
-// Grab factbox (if it exists)
-const factbox = window.frameElement.closest(
-  ".ms-nav-layout-factbox-pane-container"
+// Create unique ID for this control add-in instance
+const id = Math.random().toString(36).substring(2);
+window.frameElement.setAttribute("data-id", id);
+
+// Factbox elements
+const factbox = rootDocument.querySelector(
+  `.ms-nav-layout-aside-right:has(iframe[data-id="${id}"])`
 );
-const insideFactbox = factbox && factbox.contains(window.frameElement);
+const factboxContentArea = rootDocument.querySelector(
+  `.ms-nav-layout-factbox-content-area:has(iframe[data-id="${id}"])`
+);
+const factboxDetailsPane = rootDocument.querySelector(
+  `.ms-nav-layout-factbox-details-pane:has(iframe[data-id="${id}"])`
+);
+const fatboxCard = rootDocument.querySelector(
+  `.ms-nav-cardfactbox:has(iframe[data-id="${id}"])`
+);
+const fatboxContainer = rootDocument.querySelector(
+  `.ms-nav-band-container:has(iframe[data-id="${id}"])`
+);
+const fatboxCardPartForm = rootDocument.querySelector(
+  `.ms-nav-cardpartform:has(iframe[data-id="${id}"])`
+);
 
 // Patch factbox height if we're inside the factbox
-if (insideFactbox) {
-  factbox.querySelector(".ms-nav-layout-factbox-content-area").style.height =
-    "100%";
-  factbox.querySelector(
-    ".ms-nav-layout-factbox-content-area"
-  ).style.paddingInline = "0px";
-  factbox.querySelector(
-    ".ms-nav-layout-factbox-details-pane"
-  ).style.height = `calc(100% - ${
-    factbox.querySelector(".ms-nav-band-header").offsetHeight
-  }px)`;
-  factbox.querySelector(".ms-nav-cardfactbox").style.height = "100%";
-  factbox.querySelector(".ms-nav-band-container").style.height = "100%";
-  factbox.querySelector(".ms-nav-cardpartform").style.height = "100%";
+if (factbox) {
+  factboxContentArea.style.height = "100%";
+  factboxContentArea.style.paddingInline = "0px";
+  factboxDetailsPane.style.height = "calc(100% - 46px)"; // Take into account the factbox header height (.ms-nav-band-header)
+  fatboxCard.style.height = "100%";
+  fatboxContainer.style.height = "100%";
+  fatboxCardPartForm.style.height = "100%";
 }
 
 // Grab root
-const root = document.querySelector("#controlAddIn");
+const controlAddIn = document.querySelector("#controlAddIn");
 
-// Create iframe
+// Create object
 const object = document.createElement("object");
 
 // Apply styles
@@ -46,7 +60,7 @@ object.style.width = "100%";
 object.type = "application/pdf";
 
 // Add to root
-root.appendChild(object);
+controlAddIn.appendChild(object);
 
 /**
  * Loads a document from the given data.
@@ -63,7 +77,7 @@ function loadDocument(data) {
  * @param {number} percentage
  */
 function setFactBoxPanelWidthPercentage(percentage) {
-  if (insideFactbox) {
+  if (factbox) {
     window.frameElement.closest(
       ".ms-nav-layout-aside-right"
     ).style.flexBasis = `${percentage}%`;
