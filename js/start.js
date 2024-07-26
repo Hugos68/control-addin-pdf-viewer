@@ -91,4 +91,4 @@ Object.assign(globalThis, {
 });
 
 // Notify that the control add-in is ready
-Microsoft.Dynamics.NAV.InvokeExtensibilityMethod("ready");
+Microsoft.Dynamics.NAV.InvokeExtensibilityMethod("OnReady");

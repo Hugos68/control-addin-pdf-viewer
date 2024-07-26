@@ -4,7 +4,7 @@ controladdin PdfViewer
     StyleSheets = 'css/reset.css';
     HorizontalStretch = true;
     HorizontalShrink = true;
-    event Ready();
+    event OnReady();
     procedure LoadDocument(url: Text);
     procedure SetFactBoxPanelWidthPercentage(percentage: Integer);
 }
