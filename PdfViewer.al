@@ -1,6 +1,6 @@
 controladdin PdfViewer
 {
-    StartupScript = 'javascript/start.js';
+    StartupScript = 'js/start.js';
     StyleSheets = 'css/reset.css';
     HorizontalStretch = true;
     HorizontalShrink = true;
