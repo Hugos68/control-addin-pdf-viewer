@@ -63,12 +63,30 @@ object.type = "application/pdf";
 controlAddIn.appendChild(object);
 
 /**
+ * Convert dataURI to Object URL
+ * 
+ * @param {string} dataURI 
+ * @returns {URL} Object URL
+ */
+function dataURItoObjectURL(dataURI) {
+  const byteString = atob(dataURI.split(',')[1]);
+  const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+  const arrayBuffer = new ArrayBuffer(byteString.length);
+  const array = new Uint8Array(arrayBuffer);
+  for (let i = 0; i < byteString.length; i++) {
+      array[i] = byteString.charCodeAt(i);
+  }
+  const blob = new Blob([arrayBuffer], {type: mimeString});
+  return URL.createObjectURL(blob);
+}
+
+/**
  * Loads a document from the given data.
  *
  * @param {string} data - The data of the document to load.
  */
 function loadDocument(data) {
-  object.data = data;
+  object.data = dataURItoObjectURL(data);
 }
 
 /**
